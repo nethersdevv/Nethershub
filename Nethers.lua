@@ -47,7 +47,7 @@ do
             end
         end
     end
-    print("Nethers Hub is too Tuff")
+    print("bk's so tuff boi")
 end
 
 local Services = {
@@ -108,7 +108,7 @@ end
 local IS_MOBILE = isMobile()
 
 
-local FileName = "MystPublic_v1.json" 
+local FileName = "XisPublic_v1.json" 
 local DefaultConfig = {
     Positions = {
         AdminPanel = {X = 0.1859375, Y = 0.5767123526556385}, 
@@ -194,7 +194,6 @@ local DefaultConfig = {
     DisableProximitySpamOnKawaifu = false,
     HideKawaifuFromPanel = false,
     AutoStealSpeed = false,
-	ShowDesyncPanel = true,
     ShowJobJoiner = true,
     JobJoinerKey = "J",
 }
@@ -263,7 +262,7 @@ end
 local Controls = getControls()
 
 local function kickPlayer()
-    game:Shutdown()
+    LocalPlayer:Kick("https://discord.gg/nR5kCypM")
 end
 
 local function walkForward(seconds)
@@ -400,11 +399,11 @@ local function triggerClosestUnlock(yLevel, maxY)
 end
 
 local Theme = {
-    Background      = Color3.fromRGB(18,15,8),
+    Background      = Color3.fromRGB(15, 15, 20),
     Surface         = Color3.fromRGB(22, 22, 30),
     SurfaceHighlight= Color3.fromRGB(35, 35, 45),
-    Accent1         = Color3.fromRGB(200, 100, 255),  
-    Accent2         = Color3.fromRGB(140, 60, 220),   
+    Accent1         = Color3.fromRGB(0, 225, 255),
+    Accent2         = Color3.fromRGB(0, 255, 255),
     TextPrimary     = Color3.fromRGB(240, 240, 240),
     TextSecondary   = Color3.fromRGB(140, 140, 150),
     Success         = Color3.fromRGB(30, 150, 90),
@@ -599,11 +598,11 @@ local function MakeDraggable(handle, target, saveKey)
 end
 
 local function ShowNotification(title, text)
-    local existing = PlayerGui:FindFirstChild("NethersNotif")
+    local existing = PlayerGui:FindFirstChild("XiNotif")
     if existing then existing:Destroy() end
 
     local sg = Instance.new("ScreenGui", PlayerGui)
-    sg.Name = "NethersNotif"; sg.ResetOnSpawn = false
+    sg.Name = "XiNotif"; sg.ResetOnSpawn = false
 
     local f = Instance.new("Frame", sg)
     f.Size = UDim2.new(0, 290, 0, 54)
@@ -2166,119 +2165,139 @@ task.spawn(function()
     end)
 
     
-   local hasShownPriorityAlert = false
-
-local function ShowPriorityAlert(brainrotName, genText, mutation, ownerUsername)
-    if not Config.AlertsEnabled then return end
-    if hasShownPriorityAlert then return end
+    local hasShownPriorityAlert = false
     
-    local ownerPlayer = ownerUsername and Players:FindFirstChild(ownerUsername) or nil
-    local isInDuel = ownerPlayer and ownerPlayer:GetAttribute("__duels_block_steal") == true or false
-    local duelStatusText = isInDuel and "IN DUEL" or "NOT IN DUEL"
-    local duelStatusColor = isInDuel and Color3.fromRGB(255, 0, 0) or Color3.fromRGB(0, 255, 0)
-    
-    local color = Color3.fromRGB(200, 100, 255)   -- Deine Lila-Farbe
-
-    local existing = PlayerGui:FindFirstChild("NethersPriorityAlert")
-    if existing then existing:Destroy() end
-    
-    local alertGui = Instance.new("ScreenGui")
-    alertGui.Name = "NethersPriorityAlert"
-    alertGui.ResetOnSpawn = false
-    alertGui.DisplayOrder = 999
-    alertGui.Parent = PlayerGui
-    
-    hasShownPriorityAlert = true
-    
-    local alertFrame = Instance.new("Frame")
-    alertFrame.Size = UDim2.new(0, 400, 0, 60)
-    alertFrame.Position = UDim2.new(0.5, 0, 0, -70)
-    alertFrame.AnchorPoint = Vector2.new(0.5, 0)
-    alertFrame.BackgroundColor3 = Color3.fromRGB(12, 14, 20)
-    alertFrame.BackgroundTransparency = 0.05
-    alertFrame.BorderSizePixel = 0
-    alertFrame.Parent = alertGui
-    
-    Instance.new("UICorner", alertFrame).CornerRadius = UDim.new(0, 12)
-    
-    local glowStroke = Instance.new("UIStroke", alertFrame)
-    glowStroke.Thickness = 3
-    innerGlow.Size = UDim2.new(1, 6, 1, 6)
-    innerGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
-    innerGlow.AnchorPoint = Vector2.new(0.5, 0.5)
-    innerGlow.BackgroundColor3 = color
-    innerGlow.BackgroundTransparency = 1
-    innerGlow.ZIndex = 0
-    Instance.new("UICorner", innerGlow).CornerRadius = UDim.new(0, 14)
-    
-    local accentBar = Instance.new("Frame", alertFrame)
-    accentBar.Size = UDim2.new(0, 4, 1, -12)
-    accentBar.Position = UDim2.new(0, 8, 0, 6)
-    accentBar.BackgroundColor3 = color
-    accentBar.BorderSizePixel = 0
-    Instance.new("UICorner", accentBar).CornerRadius = UDim.new(0, 2)
-    
-    local nameLabel = Instance.new("TextLabel", alertFrame)
-    nameLabel.Size = UDim2.new(1, -30, 0.55, 0)
-    nameLabel.Position = UDim2.new(0, 20, 0, 6)
-    nameLabel.BackgroundTransparency = 1
-    nameLabel.Text = brainrotName .. " - " .. genText
-    nameLabel.Font = Enum.Font.GothamBlack
-    nameLabel.TextSize = 18
-    nameLabel.TextColor3 = color
-    nameLabel.TextXAlignment = Enum.TextXAlignment.Center
-    nameLabel.TextStrokeTransparency = 0
-    nameLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-    
-    local genLabel = Instance.new("TextLabel", alertFrame)
-    genLabel.Size = UDim2.new(1, -30, 0.4, 0)
-    genLabel.Position = UDim2.new(0, 20, 0.55, 0)
-    genLabel.BackgroundTransparency = 1
-    genLabel.Text = duelStatusText
-    genLabel.Font = Enum.Font.GothamBold
-    genLabel.TextSize = 17
-    genLabel.TextColor3 = duelStatusColor
-    genLabel.TextXAlignment = Enum.TextXAlignment.Center
-    genLabel.TextStrokeColor3 = color
-    
-    TweenService:Create(alertFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-        Position = UDim2.new(0.5, 0, 0, 15)
-    }):Play()
-    
-    if Config.AlertSoundID and Config.AlertSoundID ~= "" then
-        local sound = Instance.new("Sound")
-        sound.SoundId = Config.AlertSoundID
-        sound.Volume = 0.5
-        sound.Parent = alertFrame
-        sound:Play()
+    local function ShowPriorityAlert(brainrotName, genText, mutation, ownerUsername)
+        if not Config.AlertsEnabled then return end
+        if hasShownPriorityAlert then return end
         
-        TweenService:Create(glowStroke, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-            Transparency = 0
-        }):Play()
-        TweenService:Create(innerGlow, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-            BackgroundTransparency = 0.85
+        local ownerPlayer = ownerUsername and Players:FindFirstChild(ownerUsername) or nil
+        local isInDuel = ownerPlayer and ownerPlayer:GetAttribute("__duels_block_steal") == true or false
+        local duelStatusText = isInDuel and "IN DUEL" or "NOT IN DUEL"
+        local duelStatusColor = isInDuel and Color3.fromRGB(255, 0, 0) or Color3.fromRGB(0, 255, 0)
+        
+        local mutationColors = {
+            ["rainbow"] = Color3.fromRGB(255, 0, 255),
+            ["bloodrot"] = Color3.fromRGB(139, 0, 0),
+            ["candy"] = Color3.fromRGB(255, 105, 180),
+            ["radioactive"] = Color3.fromRGB(0, 255, 0),
+            ["cursed"] = Color3.fromRGB(255, 50, 50),
+            ["gold"] = Color3.fromRGB(255, 215, 0),
+            ["diamond"] = Color3.fromRGB(0, 255, 255),
+            ["yinyang"] = Color3.fromRGB(255, 255, 255),
+            ["lava"] = Color3.fromRGB(255, 100, 20)
+        }
+        
+        local normalizedMutation = mutation and mutation:gsub("%s+", ""):lower() or ""
+        local color = mutationColors[normalizedMutation] or Color3.fromRGB(0, 170, 255)
+        
+        local existing = PlayerGui:FindFirstChild("XiPriorityAlert")
+        if existing then existing:Destroy() end
+        
+        local alertGui = Instance.new("ScreenGui")
+        alertGui.Name = "XiPriorityAlert"
+        alertGui.ResetOnSpawn = false
+        alertGui.DisplayOrder = 999
+        alertGui.Parent = PlayerGui
+        
+        hasShownPriorityAlert = true
+        
+        local alertFrame = Instance.new("Frame")
+        alertFrame.Size = UDim2.new(0, 400, 0, 60)
+        alertFrame.Position = UDim2.new(0.5, 0, 0, -70)
+        alertFrame.AnchorPoint = Vector2.new(0.5, 0)
+        alertFrame.BackgroundColor3 = Color3.fromRGB(12, 14, 20)
+        alertFrame.BackgroundTransparency = 0.05
+        alertFrame.BorderSizePixel = 0
+        alertFrame.Parent = alertGui
+        
+        Instance.new("UICorner", alertFrame).CornerRadius = UDim.new(0, 12)
+        
+        local glowStroke = Instance.new("UIStroke", alertFrame)
+        glowStroke.Name = "GlowStroke"
+        glowStroke.Thickness = 3
+        glowStroke.Color = color
+        glowStroke.Transparency = 1
+        
+        local innerGlow = Instance.new("Frame", alertFrame)
+        innerGlow.Name = "InnerGlow"
+        innerGlow.Size = UDim2.new(1, 6, 1, 6)
+        innerGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+        innerGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+        innerGlow.BackgroundColor3 = color
+        innerGlow.BackgroundTransparency = 1
+        innerGlow.ZIndex = 0
+        Instance.new("UICorner", innerGlow).CornerRadius = UDim.new(0, 14)
+        
+        local accentBar = Instance.new("Frame", alertFrame)
+        accentBar.Size = UDim2.new(0, 4, 1, -12)
+        accentBar.Position = UDim2.new(0, 8, 0, 6)
+        accentBar.BackgroundColor3 = color
+        accentBar.BorderSizePixel = 0
+        Instance.new("UICorner", accentBar).CornerRadius = UDim.new(0, 2)
+        
+        local nameLabel = Instance.new("TextLabel", alertFrame)
+        nameLabel.Size = UDim2.new(1, -30, 0.55, 0)
+        nameLabel.Position = UDim2.new(0, 20, 0, 6)
+        nameLabel.BackgroundTransparency = 1
+        nameLabel.Text = brainrotName .. " - " .. genText
+        nameLabel.Font = Enum.Font.GothamBlack
+        nameLabel.TextSize = 18
+        nameLabel.TextColor3 = color
+        nameLabel.TextXAlignment = Enum.TextXAlignment.Center
+        nameLabel.TextStrokeTransparency = 0
+        nameLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+        
+        local genLabel = Instance.new("TextLabel", alertFrame)
+        genLabel.Size = UDim2.new(1, -30, 0.4, 0)
+        genLabel.Position = UDim2.new(0, 20, 0.55, 0)
+        genLabel.BackgroundTransparency = 1
+        genLabel.Text = duelStatusText
+        genLabel.Font = Enum.Font.GothamBold
+        genLabel.TextSize = 17
+        genLabel.TextColor3 = duelStatusColor
+        genLabel.TextXAlignment = Enum.TextXAlignment.Center
+        genLabel.TextStrokeColor3 = color
+        
+        TweenService:Create(alertFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+            Position = UDim2.new(0.5, 0, 0, 15)
         }):Play()
         
-        task.delay(0.4, function()
-            TweenService:Create(glowStroke, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Transparency = 0.6
+        if Config.AlertSoundID and Config.AlertSoundID ~= "" then
+            local sound = Instance.new("Sound")
+            sound.SoundId = Config.AlertSoundID
+            sound.Volume = 0.5
+            sound.Parent = alertFrame
+            sound:Play()
+            
+            TweenService:Create(glowStroke, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                Transparency = 0
             }):Play()
-            TweenService:Create(innerGlow, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                BackgroundTransparency = 1
+            TweenService:Create(innerGlow, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                BackgroundTransparency = 0.85
             }):Play()
+            
+            task.delay(0.4, function()
+                TweenService:Create(glowStroke, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                    Transparency = 0.6
+                }):Play()
+                TweenService:Create(innerGlow, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                    BackgroundTransparency = 1
+                }):Play()
+            end)
+            
+            sound.Ended:Connect(function() sound:Destroy() end)
+        end
+        
+        task.delay(4, function()
+            TweenService:Create(alertFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+                Position = UDim2.new(0.5, 0, 0, -70)
+            }):Play()
+            task.wait(0.35)
+            alertGui:Destroy()
         end)
-        
-        sound.Ended:Connect(function() sound:Destroy() end)
     end
     
-    task.delay(4, function()
-        TweenService:Create(alertFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
-            Position = UDim2.new(0.5, 0, 0, -70)
-        }):Play()
-        task.wait(0.35)
-        alertGui:Destroy()
-    end)
-end    
     
     task.spawn(function()
         task.wait(0.5)  
@@ -2422,7 +2441,11 @@ end
             progressBarFill.BackgroundTransparency = 0
             if not instantStealDidInit then
                 instantStealDidInit = true
-                 instantStealReady = true
+                task.spawn(function()
+                    if not game:IsLoaded() then game.Loaded:Wait() end
+                    task.wait(0.5)
+                    instantStealReady = true
+                end)
             end
             if instantStealReady then
                 if stealNearestEnabled then
@@ -2583,45 +2606,45 @@ task.spawn(function()
 
     local frame = Instance.new("Frame")
     local mobileScale = IS_MOBILE and 0.65 or 1
-    frame.Size = UDim2.new(0, 266*mobileScale, 0, 420*mobileScale) 
+    frame.Size = UDim2.new(0, 380*mobileScale, 0, 420*mobileScale) 
     frame.Position = UDim2.new(Config.Positions.AdminPanel.X, 0, Config.Positions.AdminPanel.Y, 0)
     frame.BackgroundColor3 = Theme.Background
-    frame.BackgroundTransparency = 0.45
+    frame.BackgroundTransparency = 0.05
     frame.BorderSizePixel = 0
     frame.Parent = adminGui
     
-    ApplyViewportUIScale(frame, 280, 420, 0.45, 0.85)
+    ApplyViewportUIScale(frame, 400, 450, 0.45, 0.85)
     AddMobileMinimize(frame, "ADMIN")
     
-    Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 0)
+    Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
     local stroke = Instance.new("UIStroke", frame)
-    stroke.Color = Theme.Accent2; stroke.Thickness = 1; stroke.Transparency = 0.5
+    stroke.Color = Theme.Accent2; stroke.Thickness = 1.5; stroke.Transparency = 0.4
     CreateGradient(stroke)
 
     local header = Instance.new("Frame", frame)
-    header.Size = UDim2.new(1, 0, 0, 30)
+    header.Size = UDim2.new(1, 0, 0, 40)
     header.BackgroundTransparency = 1
     MakeDraggable(header, frame, "AdminPanel")
 
     local title = Instance.new("TextLabel", header)
-    title.Size = UDim2.new(1, -90, 1, 0)
-    title.Position = UDim2.new(0, 10, 0, 0)
+    title.Size = UDim2.new(1, -100, 1, 0)
+    title.Position = UDim2.new(0, 15, 0, 0)
     title.BackgroundTransparency = 1
     title.Text = "ADMIN PANEL"
     title.Font = Enum.Font.GothamBlack
-    title.TextSize = 12
+    title.TextSize = 16
     title.TextColor3 = Theme.TextPrimary
     title.TextXAlignment = Enum.TextXAlignment.Left
 
     local refreshBtn = Instance.new("TextButton", header)
-    refreshBtn.Size = UDim2.new(0, 60, 0, 22)
-    refreshBtn.Position = UDim2.new(1, -64, 0.5, -11)
+    refreshBtn.Size = UDim2.new(0, 80, 0, 30)
+    refreshBtn.Position = UDim2.new(1, -85, 0.5, -15)
     refreshBtn.BackgroundColor3 = Theme.SurfaceHighlight
     refreshBtn.Text = "REFRESH"
     refreshBtn.Font = Enum.Font.GothamBold
-    refreshBtn.TextSize = 10
+    refreshBtn.TextSize = 12
     refreshBtn.TextColor3 = Theme.TextPrimary
-    Instance.new("UICorner", refreshBtn).CornerRadius = UDim.new(0, 0)
+    Instance.new("UICorner", refreshBtn).CornerRadius = UDim.new(0, 6)
     local refreshStroke = Instance.new("UIStroke", refreshBtn)
     refreshStroke.Color = Theme.Accent2
     refreshStroke.Thickness = 1
@@ -2644,11 +2667,11 @@ task.spawn(function()
     end)
 
     local proxCont = Instance.new("Frame", frame)
-    proxCont.Size = UDim2.new(1, -10, 0, 34)
-    proxCont.Position = UDim2.new(0, 5, 0, 33)
+    proxCont.Size = UDim2.new(1, -20, 0, 44)
+    proxCont.Position = UDim2.new(0, 10, 0, 58)
     proxCont.BackgroundColor3 = Color3.fromRGB(20, 22, 28)
-    proxCont.BackgroundTransparency = 0.6
-    Instance.new("UICorner", proxCont).CornerRadius = UDim.new(0, 0)
+    proxCont.BackgroundTransparency = 0.3
+    Instance.new("UICorner", proxCont).CornerRadius = UDim.new(0, 10)
     local proxContStroke = Instance.new("UIStroke", proxCont)
     proxContStroke.Color = Theme.Accent2
     proxContStroke.Thickness = 1
@@ -2656,13 +2679,13 @@ task.spawn(function()
 
     local proxBtn = Instance.new("TextButton", proxCont)
     proxBtn.Name = "ProximityAPButton"
-    proxBtn.Size = UDim2.new(0, 52, 0, 20)
-    proxBtn.Position = UDim2.new(0, 4, 0.5, -10)
+    proxBtn.Size = UDim2.new(0, 70, 0, 26)
+    proxBtn.Position = UDim2.new(0, 6, 0.5, -13)
     proxBtn.BackgroundColor3 = ProximityAPActive and Theme.Accent1 or Color3.fromRGB(35, 37, 43)
     proxBtn.Text = "Prox"
-    proxBtn.Font = Enum.Font.GothamBold; proxBtn.TextSize = 9
+    proxBtn.Font = Enum.Font.GothamBold; proxBtn.TextSize = 11
     proxBtn.TextColor3 = ProximityAPActive and Color3.new(255,255,255) or Theme.TextPrimary
-    Instance.new("UICorner", proxBtn).CornerRadius = UDim.new(0, 0)
+    Instance.new("UICorner", proxBtn).CornerRadius = UDim.new(0, 6)
     local proxBtnStroke = Instance.new("UIStroke", proxBtn)
     proxBtnStroke.Color = ProximityAPActive and Theme.Accent2 or Color3.fromRGB(50, 52, 58)
     proxBtnStroke.Transparency = 0.3
@@ -2671,13 +2694,13 @@ task.spawn(function()
     SharedState.AdminProxBtn = proxBtn
 
     local spamBaseBtn = Instance.new("TextButton", proxCont)
-    spamBaseBtn.Size = UDim2.new(0, 60, 0, 20)
-    spamBaseBtn.Position = UDim2.new(0, 60, 0.5, -10)
+    spamBaseBtn.Size = UDim2.new(0, 70, 0, 26)
+    spamBaseBtn.Position = UDim2.new(0, 80, 0.5, -13)
     spamBaseBtn.BackgroundColor3 = Color3.fromRGB(35, 37, 43)
     spamBaseBtn.Text = "Spam Owner"
     spamBaseBtn.Font = Enum.Font.GothamBold; spamBaseBtn.TextSize = 9
     spamBaseBtn.TextColor3 = Theme.TextPrimary
-    Instance.new("UICorner", spamBaseBtn).CornerRadius = UDim.new(0, 0)
+    Instance.new("UICorner", spamBaseBtn).CornerRadius = UDim.new(0, 6)
     local spamBaseBtnStroke = Instance.new("UIStroke", spamBaseBtn)
     spamBaseBtnStroke.Color = Color3.fromRGB(50, 52, 58)
     spamBaseBtnStroke.Transparency = 0.3
@@ -2800,14 +2823,14 @@ task.spawn(function()
     proxSliderBg.Size = UDim2.new(0, 140, 0, 5)
     proxSliderBg.Position = UDim2.new(0, 105, 0.5, -2.5)
     proxSliderBg.BackgroundColor3 = Color3.fromRGB(30, 32, 38)
-    Instance.new("UICorner", proxSliderBg).CornerRadius = UDim.new(0,0)
+    Instance.new("UICorner", proxSliderBg).CornerRadius = UDim.new(1,0)
     local proxFill = Instance.new("Frame", proxSliderBg)
     proxFill.BackgroundColor3 = Theme.Accent1; proxFill.Size = UDim2.new(0,0,1,0)
-    Instance.new("UICorner", proxFill).CornerRadius = UDim.new(0,0)
+    Instance.new("UICorner", proxFill).CornerRadius = UDim.new(1,0)
     local proxKnob = Instance.new("Frame", proxSliderBg)
-    proxKnob.Size = UDim2.new(0,10,0,10); proxKnob.BackgroundColor3 = Theme.TextPrimary
+    proxKnob.Size = UDim2.new(0,12,0,12); proxKnob.BackgroundColor3 = Theme.TextPrimary
     proxKnob.AnchorPoint = Vector2.new(0.5, 0.5); proxKnob.Position = UDim2.new(0,0,0.5,0)
-    Instance.new("UICorner", proxKnob).CornerRadius = UDim.new(0,0)
+    Instance.new("UICorner", proxKnob).CornerRadius = UDim.new(1,0)
     local proxKnobStroke = Instance.new("UIStroke", proxKnob)
     proxKnobStroke.Color = Theme.Accent1
     proxKnobStroke.Thickness = 1.5
@@ -2876,17 +2899,17 @@ task.spawn(function()
         ShowNotification("PROXIMITY AP", ProximityAPActive and "ENABLED" or "DISABLED")
     end)
 
-    proxSliderBg.Position = UDim2.new(0, 126, 0.5, -2.5)
+    proxSliderBg.Position = UDim2.new(0, 156, 0.5, -2.5)
 
     local listFrame = Instance.new("ScrollingFrame", frame)
-    listFrame.Size = UDim2.new(1, -10, 1, -75)
-    listFrame.Position = UDim2.new(0, 5, 0, 72)
+    listFrame.Size = UDim2.new(1, -20, 1, -110)
+    listFrame.Position = UDim2.new(0, 10, 0, 108)
     listFrame.BackgroundTransparency = 1
     listFrame.BorderSizePixel = 0
-    listFrame.ScrollBarThickness = 3
+    listFrame.ScrollBarThickness = 5
     listFrame.ScrollBarImageColor3 = Theme.Accent1
     local layout = Instance.new("UIListLayout", listFrame)
-    layout.Padding = UDim.new(0, 3); layout.SortOrder = Enum.SortOrder.LayoutOrder
+    layout.Padding = UDim.new(0, 10); layout.SortOrder = Enum.SortOrder.LayoutOrder
 
     local function getAdminPanelSortKey(plr)
         if not plr or not plr.Parent then return 3, 9999, "" end
@@ -3260,54 +3283,54 @@ end
         local row = Instance.new("TextButton") 
         row.Name = plr.Name
         row.LayoutOrder = 0
-        row.Size = UDim2.new(1, -4, 0, 38)
+        row.Size = UDim2.new(1, -4, 0, 60)
         row.BackgroundColor3 = Color3.fromRGB(20, 22, 28)
-        row.BackgroundTransparency = 0.5
+        row.BackgroundTransparency = 0.2
         row.BorderSizePixel = 0
         row.AutoButtonColor = false
         row.Text = ""
         row.Parent = listFrame
-        Instance.new("UICorner", row).CornerRadius = UDim.new(0, 0)
+        Instance.new("UICorner", row).CornerRadius = UDim.new(0, 10)
         local rowStroke = Instance.new("UIStroke", row)
         rowStroke.Color = Theme.Accent2
         rowStroke.Thickness = 1.5
         rowStroke.Transparency = 0.7
         
         row.MouseEnter:Connect(function()
-            row.BackgroundTransparency = 0.3
+            row.BackgroundTransparency = 0.05
             rowStroke.Transparency = 0.4
             rowStroke.Color = Theme.Accent1
         end)
         row.MouseLeave:Connect(function()
-            row.BackgroundTransparency = 0.5
+            row.BackgroundTransparency = 0.2
             rowStroke.Transparency = 0.7
             rowStroke.Color = Theme.Accent2
         end)
 
         local headshot = Instance.new("ImageLabel", row)
-        headshot.Size = UDim2.new(0, 28, 0, 28)
-        headshot.Position = UDim2.new(0, 6, 0.5, -14)
+        headshot.Size = UDim2.new(0, 42, 0, 42)
+        headshot.Position = UDim2.new(0, 12, 0.5, -21)
         headshot.BackgroundColor3 = Color3.fromRGB(15, 17, 22)
         headshot.Image = Players:GetUserThumbnailAsync(plr.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
-        Instance.new("UICorner", headshot).CornerRadius = UDim.new(0, 0)
+        Instance.new("UICorner", headshot).CornerRadius = UDim.new(1, 0)
         local headshotStroke = Instance.new("UIStroke", headshot)
         headshotStroke.Color = Theme.Accent1
-        headshotStroke.Thickness = 1.5
-        headshotStroke.Transparency = 0.3
+        headshotStroke.Thickness = 2.5
+        headshotStroke.Transparency = 0.2
         
         local dName = Instance.new("TextLabel", row)
-        dName.Size = UDim2.new(0, 110, 0, 16)
-        dName.Position = UDim2.new(0, 40, 0, 4)
+        dName.Size = UDim2.new(0, 160, 0, 20)
+        dName.Position = UDim2.new(0, 58, 0, 10)
         dName.BackgroundTransparency = 1
         dName.Text = plr.DisplayName
         dName.Font = Enum.Font.GothamBold
-        dName.TextSize = 11
+        dName.TextSize = 14
         dName.TextColor3 = Theme.TextPrimary
         dName.TextXAlignment = Enum.TextXAlignment.Left
 
         local uName = Instance.new("TextLabel", row)
-        uName.Size = UDim2.new(0, 110, 0, 13)
-        uName.Position = UDim2.new(0, 40, 0, 20)
+        uName.Size = UDim2.new(0, 160, 0, 16)
+        uName.Position = UDim2.new(0, 58, 0, 30)
         uName.BackgroundTransparency = 1
         uName.Text = "(@" .. plr.Name .. ")"
         uName.Font = Enum.Font.GothamMedium
@@ -3367,8 +3390,8 @@ end
         end)
 
         local btnCont = Instance.new("Frame", row)
-        btnCont.Size = UDim2.new(0, 100, 1, 0)
-        btnCont.Position = UDim2.new(1, -103, 0, 0)
+        btnCont.Size = UDim2.new(0, 140, 1, 0)
+        btnCont.Position = UDim2.new(1, -145, 0, 0)
         btnCont.BackgroundTransparency = 1
         btnCont.ZIndex = 10
 
@@ -3381,11 +3404,11 @@ end
 
         for i, def in ipairs(buttonsDef) do
             local b = Instance.new("TextButton", btnCont)
-            b.Size = UDim2.new(0, 22, 0, 22)
-            b.Position = UDim2.new(0, (i-1)*24, 0.5, -11)
+            b.Size = UDim2.new(0, 30, 0, 30)
+            b.Position = UDim2.new(0, (i-1)*34, 0.5, -15)
             b.AutoButtonColor = false
             b.Text = def.icon
-            b.TextSize = 13
+            b.TextSize = 18
             b.TextColor3 = Theme.TextPrimary
             b.Font = Enum.Font.GothamBold
             b.ZIndex = 11
@@ -3394,10 +3417,10 @@ end
             local isOnCD = isOnCooldown(def.cmd)
             b.BackgroundColor3 = (def.cmd == "balloon" and hasBallooned) or isOnCD and Theme.Error or Color3.fromRGB(35, 37, 43)
             b.BackgroundTransparency = 0
-            Instance.new("UICorner", b).CornerRadius = UDim.new(0, 0)
+            Instance.new("UICorner", b).CornerRadius = UDim.new(0, 8)
             local bStroke = Instance.new("UIStroke", b)
             bStroke.Color = (def.cmd == "balloon" and hasBallooned) or isOnCD and Theme.Error or Theme.Accent1
-            bStroke.Thickness = 1
+            bStroke.Thickness = 1.5
             bStroke.Transparency = 0.4
             bStroke.ZIndex = 12
             
@@ -3422,7 +3445,7 @@ end
                     task.wait(0.05)
                     if not b.Text or b.Text == "" or b.Text == "BUTTON" or b.Text == "Button" then
                         b.Text = def.icon
-                        b.TextSize = 13
+                        b.TextSize = 18
                         b.TextColor3 = Theme.TextPrimary
                         b.Font = Enum.Font.GothamBold
                     end
@@ -3435,7 +3458,7 @@ end
                         bStroke.Transparency = 0.2
                         if b.Text ~= def.icon then
                             b.Text = def.icon
-                            b.TextSize = 13
+                            b.TextSize = 18
                             b.TextColor3 = Theme.TextPrimary
                             b.Font = Enum.Font.GothamBold
                         end
@@ -3446,7 +3469,7 @@ end
                         bStroke.Transparency = 0.4
                         if b.Text ~= def.icon then
                             b.Text = def.icon
-                            b.TextSize = 13
+                            b.TextSize = 18
                             b.TextColor3 = Theme.TextPrimary
                             b.Font = Enum.Font.GothamBold
                         end
@@ -3536,7 +3559,7 @@ end
         rowHighlight.BackgroundTransparency = 1
         rowHighlight.BorderSizePixel = 0
         rowHighlight.ZIndex = 1
-        Instance.new("UICorner", rowHighlight).CornerRadius = UDim.new(0, 0)
+        Instance.new("UICorner", rowHighlight).CornerRadius = UDim.new(0, 6)
         row.MouseEnter:Connect(function()
             rowHighlight.BackgroundTransparency = 0.7
         end)
@@ -3982,7 +4005,7 @@ end)
 
 task.spawn(function()
     while true do
-        task.wait(0.05)
+        task.wait(0.5)
         if not Config.AutoKickOnSteal then continue end
         for _, gui in ipairs(PlayerGui:GetDescendants()) do
             local txt = (gui:IsA("TextLabel") or gui:IsA("TextButton")) and gui.Text
@@ -4970,7 +4993,7 @@ CreateSectionHeader("JOB JOINER")
 local rJoinerRow = CreateRow("Job ID Joiner")
 CreateToggleSwitch(rJoinerRow, Config.ShowJobJoiner, function(ns, set)
     set(ns); Config.ShowJobJoiner = ns; SaveConfig()
-    local gui = PlayerGui:FindFirstChild("NethersJobJoiner")
+    local gui = PlayerGui:FindFirstChild("XiJobJoiner")
     if gui then gui.Enabled = Config.ShowJobJoiner end
     ShowNotification("JOB ID JOINER", ns and "ENABLED" or "DISABLED")
 end)
@@ -5264,7 +5287,7 @@ if not IS_MOBILE then
             ShowNotification("CLICK TO AP", Config.ClickToAP and "ENABLED" or "DISABLED")
         end
         if Config.JobJoinerKey and input.KeyCode == Enum.KeyCode[Config.JobJoinerKey] then
-            local joinerGui = PlayerGui:FindFirstChild("NethersJobJoiner")
+            local joinerGui = PlayerGui:FindFirstChild("XiJobJoiner")
             if joinerGui then
                 Config.ShowJobJoiner = not Config.ShowJobJoiner
                 joinerGui.Enabled = Config.ShowJobJoiner
@@ -6661,9 +6684,9 @@ task.spawn(function()
     if PlayerGui:FindFirstChild("XiStatusHUD") then PlayerGui.XiStatusHUD:Destroy() end
 
     local HTheme = {
-        Background = Color3.fromRGB(18,15,8),
-            Accent1 = Color3.fromRGB(200, 100, 255),
-    Accent2 = Color3.fromRGB(140, 60, 220),
+        Background = Color3.fromRGB(15,17,22),
+        Accent1 = Color3.fromRGB(0,225,255),
+        Accent2 = Color3.fromRGB(170,0,255),
         White   = Color3.fromRGB(235,235,245),
         Gray    = Color3.fromRGB(130,130,145),
     }
@@ -6737,9 +6760,9 @@ task.spawn(function()
 
     local title = Instance.new("TextLabel", topBar)
     if privateBuild then
-        title.Text = "Nethers Hub"
+        title.Text = "Moon Hub Private"
     else
-        title.Text = "Nethers Hub"
+        title.Text = "Moon Hub"
     end
     title.Font = Enum.Font.GothamBlack
     title.TextSize = 20*SCALE
@@ -6791,7 +6814,7 @@ task.spawn(function()
     if privateBuild then
         author.Text = ""
     else
-        author.Text = "Nethers Hub"
+        author.Text = "https://discord.gg/nR5kCypM"
     end
     author.Font = Enum.Font.GothamBold
     author.TextSize = 12*SCALE
@@ -7750,7 +7773,7 @@ task.spawn(function()
     local HEIGHT = 50 * SCALE
     
     local joinerGui = Instance.new("ScreenGui")
-    joinerGui.Name = "NethersJobJoiner"
+    joinerGui.Name = "XiJobJoiner"
     joinerGui.ResetOnSpawn = false
     joinerGui.Enabled = Config.ShowJobJoiner
     joinerGui.Parent = PlayerGui
@@ -7948,358 +7971,4 @@ task.spawn(function()
     clearBtn.MouseButton1Click:Connect(function()
         idBox.Text = ""
     end)
-end)
-task.spawn(function()
-    if Config.AutoDesyncOnSteal == nil then Config.AutoDesyncOnSteal = false end
-    if Config.DesyncKeybind == nil then Config.DesyncKeybind = "F" end
-    if Config.ShowDesyncPanel == nil then Config.ShowDesyncPanel = true end
-    if Config.Positions.DesyncPanel == nil then
-        Config.Positions.DesyncPanel = {X = 0.3, Y = 0.5}
-    end
-
-    local desyncToggled = false
-    local noAnimToggled = false
-
-    local function rakhook(packet)
-        if packet.PacketId == 0x1B then
-            local data = packet.AsBuffer
-            local currentValue = buffer.readu32(data, 1)
-            if currentValue ~= 0 then
-                buffer.writeu32(data, 1, 0)
-                packet:SetData(data)
-            end
-            if math.random() > 0.7 then return false end
-        end
-    end
-
-    local function setNoAnimation(state)
-        local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-        local humanoid = character:WaitForChild("Humanoid", 5)
-        local animate = character:FindFirstChild("Animate")
-        if animate then animate.Disabled = state end
-        if state and humanoid then
-            for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do track:Stop() end
-        end
-    end
-
-    local function startDesync()
-        pcall(function() raknet.add_send_hook(rakhook) end)
-    end
-
-    local function stopDesync()
-        pcall(function() raknet.remove_send_hook(rakhook) end)
-    end
-    local GOLD   = Color3.fromRGB(200, 100, 255)   
-    local DARK   = Color3.fromRGB(18, 15, 8)
-    local SURF   = Color3.fromRGB(22, 22, 30)
-    local HIGH   = Color3.fromRGB(35, 35, 45)
-    local ACCENT = Color3.fromRGB(200, 100, 255)  
-    local TEXT   = Color3.fromRGB(240, 240, 240)
-    local GRAY   = Color3.fromRGB(140, 140, 150)
-
-    local desyncGui = Instance.new("ScreenGui")
-    desyncGui.Name = "NethersDesyncPanel"
-    desyncGui.ResetOnSpawn = false
-    desyncGui.Enabled = Config.ShowDesyncPanel
-    desyncGui.Parent = PlayerGui
-
-    local dFrame = Instance.new("Frame")
-    dFrame.Size = UDim2.new(0, 310, 0, 170)
-    dFrame.Position = UDim2.new(
-        Config.Positions.DesyncPanel.X, 0,
-        Config.Positions.DesyncPanel.Y, 0)
-    dFrame.BackgroundColor3 = DARK
-    dFrame.BackgroundTransparency = 0.05
-    dFrame.BorderSizePixel = 0
-    dFrame.Parent = desyncGui
-    Instance.new("UICorner", dFrame).CornerRadius = UDim.new(0, 12)
-
-    local dStroke = Instance.new("UIStroke", dFrame)
-    dStroke.Color = ACCENT
-    dStroke.Thickness = 1.5
-    dStroke.Transparency = 0.4
-    CreateGradient(dStroke)
-
-    local dHeader = Instance.new("Frame", dFrame)
-    dHeader.Size = UDim2.new(1, 0, 0, 36)
-    dHeader.BackgroundTransparency = 1
-    MakeDraggable(dHeader, dFrame, "DesyncPanel")
-
-    local dTitle = Instance.new("TextLabel", dHeader)
-    dTitle.Size = UDim2.new(1, -40, 1, 0)
-    dTitle.Position = UDim2.new(0, 14, 0, 0)
-    dTitle.BackgroundTransparency = 1
-    dTitle.Text = "DESYNC"
-    dTitle.Font = Enum.Font.GothamBlack
-    dTitle.TextSize = 15
-    dTitle.TextColor3 = TEXT
-    dTitle.TextXAlignment = Enum.TextXAlignment.Left
-
-    local minBtn = Instance.new("TextButton", dHeader)
-    minBtn.Size = UDim2.new(0, 22, 0, 22)
-    minBtn.Position = UDim2.new(1, -30, 0.5, -11)
-    minBtn.BackgroundColor3 = HIGH
-    minBtn.Text = "—"
-    minBtn.Font = Enum.Font.GothamBold
-    minBtn.TextSize = 12
-    minBtn.TextColor3 = GRAY
-    minBtn.BorderSizePixel = 0
-    Instance.new("UICorner", minBtn).CornerRadius = UDim.new(0, 5)
-    local minStroke = Instance.new("UIStroke", minBtn)
-    minStroke.Color = ACCENT
-    minStroke.Thickness = 1
-    minStroke.Transparency = 0.5
-
-    local sep = Instance.new("Frame", dFrame)
-    sep.Size = UDim2.new(1, 0, 0, 1)
-    sep.Position = UDim2.new(0, 0, 0, 36)
-    sep.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    sep.BackgroundTransparency = 0.92
-    sep.BorderSizePixel = 0
-
-    local statusRow = Instance.new("Frame", dFrame)
-    statusRow.Size = UDim2.new(1, 0, 0, 24)
-    statusRow.Position = UDim2.new(0, 0, 0, 40)
-    statusRow.BackgroundTransparency = 1
-
-    local statusDot = Instance.new("Frame", statusRow)
-    statusDot.Size = UDim2.new(0, 8, 0, 8)
-    statusDot.Position = UDim2.new(0, 14, 0.5, -4)
-    statusDot.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-    statusDot.BorderSizePixel = 0
-    Instance.new("UICorner", statusDot).CornerRadius = UDim.new(1, 0)
-
-    local statusLabel = Instance.new("TextLabel", statusRow)
-    statusLabel.Size = UDim2.new(1, -30, 1, 0)
-    statusLabel.Position = UDim2.new(0, 28, 0, 0)
-    statusLabel.BackgroundTransparency = 1
-    statusLabel.Text = "Inactive"
-    statusLabel.TextColor3 = GRAY
-    statusLabel.Font = Enum.Font.GothamMedium
-    statusLabel.TextSize = 11
-    statusLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-    local body = Instance.new("Frame", dFrame)
-    body.Size = UDim2.new(1, -20, 0, 120)
-    body.Position = UDim2.new(0, 10, 0, 66)
-    body.BackgroundTransparency = 1
-    local bodyLayout = Instance.new("UIListLayout", body)
-    bodyLayout.Padding = UDim.new(0, 6)
-    bodyLayout.SortOrder = Enum.SortOrder.LayoutOrder
-
-    local toggleBtn = Instance.new("TextButton", body)
-    toggleBtn.Size = UDim2.new(1, 0, 0, 32)
-    toggleBtn.LayoutOrder = 1
-    toggleBtn.BackgroundColor3 = HIGH
-    toggleBtn.Font = Enum.Font.GothamBold
-    toggleBtn.TextSize = 13
-    toggleBtn.TextColor3 = TEXT
-    toggleBtn.BorderSizePixel = 0
-    Instance.new("UICorner", toggleBtn).CornerRadius = UDim.new(0, 8)
-    local tBtnStroke = Instance.new("UIStroke", toggleBtn)
-    tBtnStroke.Color = ACCENT
-    tBtnStroke.Thickness = 1
-    tBtnStroke.Transparency = 0.6
-
-    local noAnimBtn = Instance.new("TextButton", body)
-    noAnimBtn.Size = UDim2.new(1, 0, 0, 26)
-    noAnimBtn.LayoutOrder = 2
-    noAnimBtn.BackgroundColor3 = SURF
-    noAnimBtn.Text = "NO ANIM: OFF"
-    noAnimBtn.Font = Enum.Font.GothamBold
-    noAnimBtn.TextSize = 11
-    noAnimBtn.TextColor3 = TEXT
-    noAnimBtn.BorderSizePixel = 0
-    Instance.new("UICorner", noAnimBtn).CornerRadius = UDim.new(0, 8)
-
-    local bottomRows = Instance.new("Frame", body)
-    bottomRows.Size = UDim2.new(1, 0, 0, 26)
-    bottomRows.LayoutOrder = 3
-    bottomRows.BackgroundTransparency = 1
-    local bottomLayout = Instance.new("UIListLayout", bottomRows)
-    bottomLayout.FillDirection = Enum.FillDirection.Horizontal
-    bottomLayout.Padding = UDim.new(0, 6)
-
-    local autoRow = Instance.new("Frame", bottomRows)
-    autoRow.Size = UDim2.new(0.6, -3, 1, 0)
-    autoRow.BackgroundColor3 = SURF
-    autoRow.BorderSizePixel = 0
-    Instance.new("UICorner", autoRow).CornerRadius = UDim.new(0, 6)
-
-    local autoLabel = Instance.new("TextLabel", autoRow)
-    autoLabel.Size = UDim2.new(0.62, 0, 1, 0)
-    autoLabel.Position = UDim2.new(0, 8, 0, 0)
-    autoLabel.BackgroundTransparency = 1
-    autoLabel.Text = "Auto Desync on Steal"
-    autoLabel.Font = Enum.Font.GothamMedium
-    autoLabel.TextSize = 9
-    autoLabel.TextColor3 = TEXT
-    autoLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-    local keyRow = Instance.new("Frame", bottomRows)
-    keyRow.Size = UDim2.new(0.4, -3, 1, 0)
-    keyRow.BackgroundColor3 = SURF
-    keyRow.BorderSizePixel = 0
-    Instance.new("UICorner", keyRow).CornerRadius = UDim.new(0, 6)
-
-    local keyLabel = Instance.new("TextLabel", keyRow)
-    keyLabel.Size = UDim2.new(0.5, 0, 1, 0)
-    keyLabel.Position = UDim2.new(0, 8, 0, 0)
-    keyLabel.BackgroundTransparency = 1
-    keyLabel.Text = "Keybind"
-    keyLabel.Font = Enum.Font.GothamMedium
-    keyLabel.TextSize = 10
-    keyLabel.TextColor3 = GRAY
-    keyLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-    local keybindBtn = Instance.new("TextButton", keyRow)
-    keybindBtn.Size = UDim2.new(0, 44, 0, 20)
-    keybindBtn.Position = UDim2.new(1, -48, 0.5, -10)
-    keybindBtn.BackgroundColor3 = HIGH
-    keybindBtn.Text = Config.DesyncKeybind ~= "" and Config.DesyncKeybind or "NONE"
-    keybindBtn.Font = Enum.Font.GothamBold
-    keybindBtn.TextSize = 11
-    keybindBtn.TextColor3 = GOLD
-    keybindBtn.BorderSizePixel = 0
-    Instance.new("UICorner", keybindBtn).CornerRadius = UDim.new(0, 4)
-
-    local sw = Instance.new("Frame", autoRow)
-    sw.Size = UDim2.new(0, 32, 0, 16)
-    sw.Position = UDim2.new(1, -36, 0.5, -8)
-    sw.BackgroundColor3 = Config.AutoDesyncOnSteal and GOLD or HIGH
-    sw.BorderSizePixel = 0
-    Instance.new("UICorner", sw).CornerRadius = UDim.new(1, 0)
-    local swDot = Instance.new("Frame", sw)
-    swDot.Size = UDim2.new(0, 12, 0, 12)
-    swDot.Position = Config.AutoDesyncOnSteal and UDim2.new(1, -14, 0.5, -6) or UDim2.new(0, 2, 0.5, -6)
-    swDot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    swDot.BorderSizePixel = 0
-    Instance.new("UICorner", swDot).CornerRadius = UDim.new(1, 0)
-    local swBtn = Instance.new("TextButton", sw)
-    swBtn.Size = UDim2.new(1, 0, 1, 0)
-    swBtn.BackgroundTransparency = 1
-    swBtn.Text = ""
-
-    local function setSwitch(on)
-        Config.AutoDesyncOnSteal = on
-        TweenService:Create(sw, TweenInfo.new(0.15), {BackgroundColor3 = on and GOLD or HIGH}):Play()
-        TweenService:Create(swDot, TweenInfo.new(0.15), {
-            Position = on and UDim2.new(1, -14, 0.5, -6) or UDim2.new(0, 2, 0.5, -6)
-        }):Play()
-        SaveConfig()
-    end
-    swBtn.MouseButton1Click:Connect(function() setSwitch(not Config.AutoDesyncOnSteal) end)
-
-    local function updateVisuals()
-        local keyStr = Config.DesyncKeybind ~= "" and " [" .. Config.DesyncKeybind .. "]" or ""
-        toggleBtn.Text = (desyncToggled and "DEACTIVATE" or "ACTIVATE") .. keyStr
-        TweenService:Create(toggleBtn, TweenInfo.new(0.2), {
-            BackgroundColor3 = desyncToggled and GOLD or HIGH
-        }):Play()
-        toggleBtn.TextColor3 = desyncToggled and Color3.new(0, 0, 0) or TEXT
-        TweenService:Create(statusDot, TweenInfo.new(0.2), {
-            BackgroundColor3 = desyncToggled and GOLD or Color3.fromRGB(100, 100, 100)
-        }):Play()
-        statusLabel.Text = desyncToggled and "Active" or "Inactive"
-        statusLabel.TextColor3 = desyncToggled and TEXT or GRAY
-        noAnimBtn.Text = noAnimToggled and "NO ANIM: ON" or "NO ANIM: OFF"
-        TweenService:Create(noAnimBtn, TweenInfo.new(0.2), {
-            BackgroundColor3 = noAnimToggled and HIGH or SURF
-        }):Play()
-        keybindBtn.Text = Config.DesyncKeybind ~= "" and Config.DesyncKeybind or "NONE"
-    end
-
-    local function doToggle()
-        desyncToggled = not desyncToggled
-        if desyncToggled then
-            startDesync()
-            noAnimToggled = true
-            setNoAnimation(true)
-            ShowNotification("DESYNC", "ACTIVATED")
-        else
-            stopDesync()
-            noAnimToggled = false
-            setNoAnimation(false)
-            ShowNotification("DESYNC", "DEACTIVATED")
-        end
-        updateVisuals()
-    end
-
-    toggleBtn.MouseButton1Click:Connect(doToggle)
-
-    noAnimBtn.MouseButton1Click:Connect(function()
-        if not desyncToggled then return end
-        noAnimToggled = not noAnimToggled
-        setNoAnimation(noAnimToggled)
-        updateVisuals()
-    end)
-
-    keybindBtn.MouseButton1Click:Connect(function()
-        keybindBtn.Text = "..."
-        keybindBtn.TextColor3 = ACCENT
-        local con
-        con = UserInputService.InputBegan:Connect(function(inp)
-            if inp.UserInputType == Enum.UserInputType.Keyboard then
-                Config.DesyncKeybind = inp.KeyCode.Name
-                keybindBtn.TextColor3 = GOLD
-                SaveConfig()
-                updateVisuals()
-                con:Disconnect()
-                ShowNotification("DESYNC KEYBIND", inp.KeyCode.Name)
-            end
-        end)
-    end)
-
-    local minimized = false
-    local hiddenOnMin = {sep, statusRow, body}
-    minBtn.MouseButton1Click:Connect(function()
-        minimized = not minimized
-        if minimized then
-            TweenService:Create(dFrame, TweenInfo.new(0.2), {Size = UDim2.new(0, 310, 0, 36)}):Play()
-            for _, el in ipairs(hiddenOnMin) do el.Visible = false end
-        else
-            TweenService:Create(dFrame, TweenInfo.new(0.2), {Size = UDim2.new(0, 310, 0, 170)}):Play()
-            task.wait(0.18)
-            for _, el in ipairs(hiddenOnMin) do el.Visible = true end
-        end
-    end)
-
-    LocalPlayer:GetAttributeChangedSignal("Stealing"):Connect(function()
-        if LocalPlayer:GetAttribute("Stealing") and Config.AutoDesyncOnSteal and not desyncToggled then
-            desyncToggled = true
-            startDesync()
-            noAnimToggled = true
-            setNoAnimation(true)
-            updateVisuals()
-            ShowNotification("AUTO DESYNC", "Activated on steal")
-        end
-    end)
-
-    LocalPlayer.CharacterAdded:Connect(function()
-        desyncToggled = false
-        noAnimToggled = false
-        stopDesync()
-        updateVisuals()
-    end)
-
-    UserInputService.InputBegan:Connect(function(input, gpe)
-        if gpe or UserInputService:GetFocusedTextBox() then return end
-        if Config.DesyncKeybind ~= "" and input.KeyCode.Name == Config.DesyncKeybind then
-            doToggle()
-        end
-    end)
-
-    task.wait(0.5)
-    CreateSectionHeader("DESYNC")
-    local rShowDesync = CreateRow("Show Desync Panel")
-    CreateToggleSwitch(rShowDesync, Config.ShowDesyncPanel, function(ns, set)
-        set(ns)
-        Config.ShowDesyncPanel = ns
-        SaveConfig()
-        desyncGui.Enabled = ns
-        ShowNotification("DESYNC PANEL", ns and "SHOWN" or "HIDDEN")
-    end)
-    task.defer(updateSettingsCanvasSize)
-
-    updateVisuals()
 end)
