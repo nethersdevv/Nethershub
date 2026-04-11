@@ -6739,7 +6739,7 @@ task.spawn(function()
     if privateBuild then
         title.Text = "Moon Hub"
     else
-        title.Text = "Moon Hub"
+        title.Text = "🌑Moon Hub🌑"
     end
     title.Font = Enum.Font.GothamBlack
     title.TextSize = 20*SCALE
