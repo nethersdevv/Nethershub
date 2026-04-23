@@ -47,7 +47,7 @@ do
             end
         end
     end
-    print("Moon Hub is too Tuff")
+    print("Nethers Hub is too Tuff")
 end
 
 local Services = {
@@ -403,8 +403,8 @@ local Theme = {
     Background      = Color3.fromRGB(18,15,8),
     Surface         = Color3.fromRGB(22, 22, 22),
     SurfaceHighlight= Color3.fromRGB(35, 35, 45),
-    Accent1         = Color3.fromRGB(0, 120, 255),  
-    Accent2         = Color3.fromRGB(0, 80, 220), 
+    Accent1         = Color3.fromRGB(127, 127, 127),  
+    Accent2         = Color3.fromRGB(200, 200, 200), 
     TextPrimary     = Color3.fromRGB(240, 240, 240),
     TextSecondary   = Color3.fromRGB(140, 140, 150),
     Success         = Color3.fromRGB(30, 150, 90),
@@ -599,11 +599,11 @@ local function MakeDraggable(handle, target, saveKey)
 end
 
 local function ShowNotification(title, text)
-    local existing = PlayerGui:FindFirstChild("MoonNotif")
+    local existing = PlayerGui:FindFirstChild("NethersNotif")
     if existing then existing:Destroy() end
 
     local sg = Instance.new("ScreenGui", PlayerGui)
-    sg.Name = "MoonNotif"; sg.ResetOnSpawn = false
+    sg.Name = "NethersNotif"; sg.ResetOnSpawn = false
 
     local f = Instance.new("Frame", sg)
     f.Size = UDim2.new(0, 290, 0, 54)
@@ -1239,7 +1239,7 @@ task.spawn(function()
     local AnimalsShared = require(Shared:WaitForChild("Animals"))
     local NumberUtils   = require(Utils:WaitForChild("NumberUtils"))
 
-    local autoStealEnabled   = true
+    local autoStealEnabled   = false
     
     
     if Config.DefaultToPriority and Config.DefaultToHighest then
@@ -2179,11 +2179,11 @@ local function ShowPriorityAlert(brainrotName, genText, mutation, ownerUsername)
     
     local color = Color3.fromRGB(200, 100, 255)   -- Deine Lila-Farbe
 
-    local existing = PlayerGui:FindFirstChild("MoonPriorityAlert")
+    local existing = PlayerGui:FindFirstChild("NethersPriorityAlert")
     if existing then existing:Destroy() end
     
     local alertGui = Instance.new("ScreenGui")
-    alertGui.Name = "MoonPriorityAlert"
+    alertGui.Name = "NethersPriorityAlert"
     alertGui.ResetOnSpawn = false
     alertGui.DisplayOrder = 999
     alertGui.Parent = PlayerGui
@@ -2768,7 +2768,7 @@ task.spawn(function()
             
             local adminFunc = _G.runAdminCommand
             if not adminFunc then
-                task.wait(0.05)
+                task.wait(0.01)
                 adminFunc = _G.runAdminCommand
             end
             
@@ -4970,7 +4970,7 @@ CreateSectionHeader("JOB JOINER")
 local rJoinerRow = CreateRow("Job ID Joiner")
 CreateToggleSwitch(rJoinerRow, Config.ShowJobJoiner, function(ns, set)
     set(ns); Config.ShowJobJoiner = ns; SaveConfig()
-    local gui = PlayerGui:FindFirstChild("MoonJobJoiner")
+    local gui = PlayerGui:FindFirstChild("NethersJobJoiner")
     if gui then gui.Enabled = Config.ShowJobJoiner end
     ShowNotification("JOB ID JOINER", ns and "ENABLED" or "DISABLED")
 end)
@@ -5264,7 +5264,7 @@ if not IS_MOBILE then
             ShowNotification("CLICK TO AP", Config.ClickToAP and "ENABLED" or "DISABLED")
         end
         if Config.JobJoinerKey and input.KeyCode == Enum.KeyCode[Config.JobJoinerKey] then
-            local joinerGui = PlayerGui:FindFirstChild("MoonJobJoiner")
+            local joinerGui = PlayerGui:FindFirstChild("NethersJobJoiner")
             if joinerGui then
                 Config.ShowJobJoiner = not Config.ShowJobJoiner
                 joinerGui.Enabled = Config.ShowJobJoiner
@@ -6662,8 +6662,8 @@ task.spawn(function()
 
     local HTheme = {
         Background = Color3.fromRGB(18,15,8),
-            Accent1 = Color3.fromRGB(0, 120, 255),
-    Accent2 = Color3.fromRGB(0, 80, 220),
+            Accent1 = Color3.fromRGB(127, 127, 127),
+    Accent2 = Color3.fromRGB(200, 200, 200),
         White   = Color3.fromRGB(235,235,245),
         Gray    = Color3.fromRGB(130,130,145),
     }
@@ -6679,7 +6679,7 @@ task.spawn(function()
     local main = Instance.new("Frame")
     main.Name = "Main"
     main.Size = UDim2.new(0, 500*SCALE, 0, TOPBAR_H)
-    main.Position = UDim2.new(0.5, 0, 0, 20)
+    main.Position = UDim2.new(0.5, 0, 0, 0)
     main.AnchorPoint = Vector2.new(0.5, 0)
     main.BackgroundColor3 = Color3.fromRGB(20,22,28)
     main.BackgroundTransparency = 0.15
@@ -6737,9 +6737,9 @@ task.spawn(function()
 
     local title = Instance.new("TextLabel", topBar)
     if privateBuild then
-        title.Text = "Moon Hub"
+        title.Text = ""
     else
-        title.Text = "🌑Moon Hub🌑"
+        title.Text = "Nethers Hub"
     end
     title.Font = Enum.Font.GothamBlack
     title.TextSize = 20*SCALE
@@ -6756,7 +6756,7 @@ task.spawn(function()
         ColorSequenceKeypoint.new(0, HTheme.White),
         ColorSequenceKeypoint.new(0.3, HTheme.White),
         ColorSequenceKeypoint.new(0.45, HTheme.Accent1),
-        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0.5, 0.5, 0.5)),
         ColorSequenceKeypoint.new(0.55, HTheme.Accent1),
         ColorSequenceKeypoint.new(0.7, HTheme.White),
         ColorSequenceKeypoint.new(1, HTheme.White)
@@ -6791,7 +6791,7 @@ task.spawn(function()
     if privateBuild then
         author.Text = ""
     else
-        author.Text = "Moon Hub"
+        author.Text = ""
     end
     author.Font = Enum.Font.GothamBold
     author.TextSize = 12*SCALE
@@ -7750,7 +7750,7 @@ task.spawn(function()
     local HEIGHT = 50 * SCALE
     
     local joinerGui = Instance.new("ScreenGui")
-    joinerGui.Name = "MoonJobJoiner"
+    joinerGui.Name = "NethersJobJoiner"
     joinerGui.ResetOnSpawn = false
     joinerGui.Enabled = Config.ShowJobJoiner
     joinerGui.Parent = PlayerGui
@@ -7759,7 +7759,7 @@ task.spawn(function()
     main.Name = "Main"
     main.Size = UDim2.new(0, 500 * SCALE, 0, HEIGHT)
     
-    local savedPos = Config.Positions.JobJoiner or {X = 0.5, Y = 0.85}
+    local savedPos = Config.Positions.JobJoiner or {X = 0.05, Y = 0.85}
     
     main.AnchorPoint = Vector2.new(0.5, 0) 
     main.Position = UDim2.new(savedPos.X, 0, savedPos.Y, 0)
@@ -7998,7 +7998,7 @@ task.spawn(function()
     local GRAY   = Color3.fromRGB(140, 140, 150)
 
     local desyncGui = Instance.new("ScreenGui")
-    desyncGui.Name = "MoonDesyncPanel"
+    desyncGui.Name = "NethersDesyncPanel"
     desyncGui.ResetOnSpawn = false
     desyncGui.Enabled = Config.ShowDesyncPanel
     desyncGui.Parent = PlayerGui
